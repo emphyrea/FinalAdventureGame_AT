@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float jumpForce = 12f;
     public float jumpCooldown = 0.25f;
-    public float airMultiplier = 0.4f;
+    public float airMultiplier = 0.2f;
     bool canJump = true;
 
     [SerializeField] Transform orient;
@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
 
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode sprintKey = KeyCode.LeftShift;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +43,14 @@ public class PlayerMovement : MonoBehaviour
             canJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown); //invokes using cooldown as delay!!!
+        }
+        if(Input.GetKeyDown(sprintKey))
+        {
+            moveSpeed *= 2;
+        }
+        if(Input.GetKeyUp(sprintKey))
+        {
+            moveSpeed /= 2;
         }
     }
 
