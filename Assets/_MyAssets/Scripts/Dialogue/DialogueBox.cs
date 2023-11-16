@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class DialogueBox : MonoBehaviour
 {
-    public List<DialogueSegment> dialogueSegments = new List<DialogueSegment>();
+    DialogueSegment dialogueSegment;
     [Space]
     public Image speakerDisplayFace;
     public Image dialogueBoxInner;
@@ -16,9 +17,9 @@ public class DialogueBox : MonoBehaviour
     public TextMeshProUGUI dialogueDisplay;
     [Space]
     public float textSpeed;
+    public event Action onDialogFinished;
 
     private bool canContinue;
-    private int dialogueIndex;
     private int dialogueSentenceIndex;
 
     [SerializeField] GameObject dialogueBox;
@@ -37,25 +38,17 @@ public class DialogueBox : MonoBehaviour
         if(canContinue && Input.GetKeyDown(KeyCode.Space) )
         {
             dialogueSentenceIndex++;
-            if(dialogueSentenceIndex == dialogueSegments[dialogueIndex].dialogue.Count)
+
+            if (dialogueSentenceIndex == dialogueSegment.dialogue.Count)
             {
                 Debug.Log("Sentences Ended");
-                dialogueIndex++;
-                if (dialogueIndex == dialogueSegments.Count)
-                {
-                    Debug.Log("Dialogue Ended");
-                    ClearDialogue();
-                    ClearDialogueSegments();
-                    dialogueBox.gameObject.SetActive(false);
-                    return;
-                }
-            }
-            else if(dialogueSentenceIndex < dialogueSegments[dialogueIndex].dialogue.Count)
-            {
+                dialogueBox.gameObject.SetActive(false);
+                onDialogFinished?.Invoke();
                 ClearDialogue();
-                SetStyle(dialogueSegments[dialogueIndex].speaker);
-                StartCoroutine(PlayDialogueSentence(dialogueSegments[dialogueIndex].dialogue[dialogueSentenceIndex]));
+                return;
             }
+
+            StartCoroutine(PlayDialogueSentence(dialogueSegment.dialogue[dialogueSentenceIndex]));
         }
     }
 
@@ -80,10 +73,14 @@ public class DialogueBox : MonoBehaviour
         canContinue = false;
 
         ClearDialogue();
-
         for(int i = 0; i < dialogue.Length; i++) //individual letters of dialogue typing in
         {
-            dialogueDisplay.text += dialogue[i];
+            string text = "";
+            for (int j = 0; j <= i; ++j)
+            {
+                text += dialogue[j];                
+            }
+            dialogueDisplay.text = text;
             yield return new WaitForSeconds(1f / textSpeed); //delay
         }
         canContinue = true;
@@ -93,26 +90,23 @@ public class DialogueBox : MonoBehaviour
     {
         dialogueDisplay.SetText(string.Empty);
     }
-    void ClearDialogueSegments()
-    {
-        dialogueSegments.Clear();
-    }
 
-    public void AddDialogueSegments(DialogueSegment segment)
+    public void StartDialogueSegments(DialogueSegment segment)
     {
-        dialogueSegments.Add(segment);
-        SetStyle(dialogueSegments[0].speaker);
-        StartCoroutine(PlayDialogueSentence(dialogueSegments[dialogueIndex].dialogue[0]));
+        dialogueSegment = segment;
+        dialogueSentenceIndex = 0;
+        SetStyle(dialogueSegment.speaker);
+        StartCoroutine(PlayDialogueSentence(dialogueSegment.dialogue[0]));
     }
 
     private void OnEnable()
     {
-        QuestNPC.starttalk += AddDialogueSegments;
+        QuestNPC.starttalk += StartDialogueSegments;
     }
 
     private void OnDisable()
     {
-        QuestNPC.starttalk -= AddDialogueSegments;
+        QuestNPC.starttalk -= StartDialogueSegments;
     }
 }
 
