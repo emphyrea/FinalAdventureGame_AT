@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MySon
   m_EditorClassIdentifier: 
   subjectName: Sun
-  innerColorTinting: {r: 1, g: 1, b: 1, a: 0}
+  innerColorTinting: {r: 1, g: 0.9875315, b: 0.63584906, a: 0}
   subjectFace: {fileID: 21300000, guid: 0d4669b16b49e954eb50930b7998c476, type: 3}

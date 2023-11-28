@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public float moveSpeed = 7f;
-
+    Vector3 limitedVelocity;
 
     public float playerHeight = 2f;
     public LayerMask groundMask;
@@ -24,12 +24,15 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDir;
     Rigidbody rb;
 
+    Animator animator;
+
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
 
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();    
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
     }
@@ -72,21 +75,29 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 flatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         if(flatVelocity.magnitude > moveSpeed)
-        {
-            Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed; //calculate what max velocity WOULD be
+        { 
+            limitedVelocity = flatVelocity.normalized * moveSpeed; //calculate what max velocity WOULD be
             rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z); //apply it
         }
     }
 
     private void Jump()
     {
+        animator.SetTrigger("jump");
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
     private void ResetJump()
     {
+        animator.ResetTrigger("jump");
         canJump = true;
+    }
+
+    private void UpdateAnimation()
+    {
+        float forwardSpeed = Vector3.Magnitude(rb.velocity);
+        animator.SetFloat("speed", forwardSpeed);
     }
 
     // Update is called once per frame
@@ -110,5 +121,6 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
         SpeedClamper();
+        UpdateAnimation();
     }
 }
