@@ -1,26 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class QuestSlot : MonoBehaviour
 {
+    QuestBase quest;
+    [SerializeField] TextMeshProUGUI QuestTitle;
+    [SerializeField] TextMeshProUGUI QuestDetails;
+    [SerializeField] Image progressImg;
+    [SerializeField] Sprite completedImg;
+    [SerializeField] Sprite inProgressImg;
 
-    [SerializeField] string QuestTitle;
-    [SerializeField] string QuestDetails;
-    [SerializeField] Image completedImg;
-    [SerializeField] Image inProgressImg;
-
-    // Start is called before the first frame update
-    void Start()
+    internal void Init(QuestBase quest)
     {
-        completedImg.gameObject.SetActive(false);
-        inProgressImg.gameObject.SetActive(true);
+        this.quest = quest;
+        QuestTitle.text = quest.GetQuestTitle();
+        QuestDetails.text = quest.GetQuestDetails();
+        quest.statusChanged += ChangeProgressImg;
+
     }
 
-    // Update is called once per frame
-    void Update()
+    void ChangeProgressImg(QuestStatus status)
     {
-        
+        if (status == QuestStatus.Complete)
+        {
+            progressImg.sprite = completedImg;
+        }
+        else
+        {
+            progressImg.sprite = inProgressImg;
+        }
     }
 }

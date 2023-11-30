@@ -64,7 +64,7 @@ public class DialogueBox : MonoBehaviour
             speakerDisplayFace.color = Color.white;
         }
 
-        dialogueBoxInner.color += speaker.innerColorTinting;
+        dialogueBoxInner.color = speaker.innerColorTinting;
         speakerName.SetText(speaker.subjectName);
     }
 

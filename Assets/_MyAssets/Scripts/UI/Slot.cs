@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class Slot : MonoBehaviour
 {
@@ -17,7 +18,6 @@ public class Slot : MonoBehaviour
     void Start()
     {
         slotItemContent = null;
-        slotNum.text = "1";
         slotItemImage.sprite = null;
         slotItemImage.color = new Color(0,0,0,0);
         numOfItems.text = " ";
@@ -38,4 +38,8 @@ public class Slot : MonoBehaviour
         slotNum.text = num.ToString();
     }
 
+    internal object GetSlotNum()
+    {
+        return slotNum.text;
+    }
 }

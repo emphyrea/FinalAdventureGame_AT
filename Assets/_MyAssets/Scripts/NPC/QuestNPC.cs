@@ -21,9 +21,11 @@ public class QuestNPC : MonoBehaviour, IInteractable
     [SerializeField] DialogueBox dialogueBox;
     QuestStatus questStatus = QuestStatus.NotStarted;
 
-    private void Awake()
+    [SerializeField] NPCQuestComponent npcQuestComp;
+
+    private void Start()
     {
-        
+        npcQuestComp = GetComponent<NPCQuestComponent>();
     }
 
     private void DialogFinished()
@@ -42,6 +44,8 @@ public class QuestNPC : MonoBehaviour, IInteractable
             {
                 starttalk(requestDialogue);
                 questStatus = QuestStatus.InProgress;
+                npcQuestComp.GiveQuestToPlayer();
+
                 return;
             }
         }
@@ -49,7 +53,7 @@ public class QuestNPC : MonoBehaviour, IInteractable
         if (questStatus == QuestStatus.InProgress)
         {
             dialogueBox.gameObject.SetActive(true);
-            if (starttalk != null)//add check for objects given
+            if (starttalk != null)
             {
                 starttalk(inProgressDialogue);
                 return;
@@ -69,7 +73,7 @@ public class QuestNPC : MonoBehaviour, IInteractable
 
     void QuestObjectReceiver()
     {
-        questStatus = QuestStatus.Complete;
+        
     }
 
 }
