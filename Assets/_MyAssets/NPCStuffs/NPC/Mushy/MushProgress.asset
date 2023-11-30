@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6d7d9cf4d5383c4194679e6d4b46134, type: 3}
-  m_Name: MySon
+  m_Script: {fileID: 11500000, guid: 79bb4dc2f77ee0e4d98722354dee544d, type: 3}
+  m_Name: MushProgress
   m_EditorClassIdentifier: 
-  subjectName: Sun
-  innerColorTinting: {r: 1, g: 0.9875315, b: 0.63584906, a: 1}
-  subjectFace: {fileID: 21300000, guid: 0d4669b16b49e954eb50930b7998c476, type: 3}
+  dialogue:
+  - :? ... (He's wondering if you talked to his friend yet?)
+  speaker: {fileID: 11400000, guid: a4cb847bac32f57478ebcf93cab9bb7f, type: 2}

@@ -6,6 +6,19 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    public static Inventory Instance;
+    private void Awake()
+    {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     private List<Slot> slots = new List<Slot>();
     [SerializeField] Slot slotPrefab;
     [SerializeField] RectTransform slotRoot;
