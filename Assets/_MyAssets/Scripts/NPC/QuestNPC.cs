@@ -45,17 +45,18 @@ public class QuestNPC : MonoBehaviour, IInteractable
                 starttalk(requestDialogue);
                 questStatus = QuestStatus.InProgress;
                 npcQuestComp.GiveQuestToPlayer();
-
+                questStatus = npcQuestComp.GetQuest().GetQuestStatus();
                 return;
             }
         }
-
+        questStatus = npcQuestComp.GetQuest().GetQuestStatus();
         if (questStatus == QuestStatus.InProgress)
         {
             dialogueBox.gameObject.SetActive(true);
             if (starttalk != null)
             {
                 starttalk(inProgressDialogue);
+
                 return;
             }
         }

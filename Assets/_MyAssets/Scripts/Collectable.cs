@@ -11,6 +11,7 @@ public class Collectable : MonoBehaviour, IInteractable
     public void Interact()
     {
         Inventory.Instance.AddItem(item);
+        Debug.Log("added");
         Destroy(this.gameObject);
     }
 

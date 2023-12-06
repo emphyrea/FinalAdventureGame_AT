@@ -16,4 +16,10 @@ public class NPCQuestComponent : MonoBehaviour
             quest.SetQuestStatus(QuestStatus.InProgress);
         }
     }
+
+    public QuestBase GetQuest()
+    {
+        return quest;
+    }
+
 }

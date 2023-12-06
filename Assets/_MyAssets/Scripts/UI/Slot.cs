@@ -13,7 +13,6 @@ public class Slot : MonoBehaviour
     [SerializeField] Image slotItemImage;
     [SerializeField] TextMeshProUGUI numOfItems;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -55,18 +54,26 @@ public class Slot : MonoBehaviour
 
     public void AddItemCount(Item item)
     {
-       int count = 0;
-        if(slotItemContent == null)
+        int count = 0;
+        if (slotItemContent == null)
         {
             numOfItems.text = " ";
         }
         else
         {
-            count = slotItemContent.itemCount;
+            count = int.Parse(numOfItems.text);
         }
-        int prevCount = count;
-        int currCount = item.itemCount + prevCount;
+
+        Debug.Log(count);
+        int currCount = item.itemCount + count;
         numOfItems.text = currCount.ToString();
+
+    }
+
+    public int GetItemCount()
+    { 
+        int count = 0;
+        return count = int.Parse(numOfItems.text);
     }
 
     public Item GetChosenSlotItems(Item item)

@@ -15,10 +15,22 @@ public class QuestUI : MonoBehaviour
     [SerializeField] QuestSlot questSlotPrefab;
     [SerializeField] RectTransform questSlotRoot;
 
+    public static QuestUI Instance;
+
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
         owningQuestComponent.onNewQuestAdded += AddNewQuest;
+        owningQuestComponent.onStatusChanged += UpdateQuestStatusIMG;
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +45,14 @@ public class QuestUI : MonoBehaviour
         questSlots.Add(newQuestSlot);
     }
 
+    private void UpdateQuestStatusIMG(QuestStatus status)
+    {
+        foreach (QuestSlot slot in questSlots)
+        {
+            slot.ChangeProgressImg(status);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -40,6 +60,7 @@ public class QuestUI : MonoBehaviour
         {
             questUIObj.gameObject.SetActive(true);
             isOpen = true;
+
         }
         else if (Input.GetKeyDown(KeyCode.I) && isOpen)
         {

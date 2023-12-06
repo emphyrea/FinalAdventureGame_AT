@@ -14,6 +14,8 @@ public enum QuestType
 public abstract class QuestBase : ScriptableObject
 {
 
+    [SerializeField] QuestNPC originalOwner;
+
     [SerializeField] string questTitle;
     [SerializeField] string questDetails;
     public string GetQuestDetails() { return questDetails; }

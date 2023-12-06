@@ -7,7 +7,7 @@ using TMPro;
 
 public class QuestSlot : MonoBehaviour
 {
-    QuestBase quest;
+     QuestBase quest;
     [SerializeField] TextMeshProUGUI QuestTitle;
     [SerializeField] TextMeshProUGUI QuestDetails;
     [SerializeField] Image progressImg;
@@ -23,7 +23,12 @@ public class QuestSlot : MonoBehaviour
 
     }
 
-    void ChangeProgressImg(QuestStatus status)
+    public QuestBase GetCorrespondingQuest()
+    {
+        return quest;
+    }
+
+    public void ChangeProgressImg(QuestStatus status)
     {
         if (status == QuestStatus.Complete)
         {

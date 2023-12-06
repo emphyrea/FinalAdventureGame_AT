@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Quests/FetchQuest")]
 public class FetchQuest : QuestBase
 {
-
     QuestType type = QuestType.Fetch;
     [SerializeField] Item requiredObj;
     [SerializeField] int requiredAmt = 3;
@@ -15,7 +14,7 @@ public class FetchQuest : QuestBase
     public bool CheckQuestCompletion()
     {
         if (Inventory.Instance.GetItemsCount(requiredObj) >= requiredAmt)
-        { 
+        {
             return true;
         }
         return false;

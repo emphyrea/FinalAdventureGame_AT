@@ -67,7 +67,8 @@ public class Inventory : MonoBehaviour
         {
             if(slots[i].GetChosenSlotItems(item) != null)
             {
-                count += slots[i].GetChosenSlotItems(item).itemCount;
+                count += slots[i].GetItemCount();
+                Debug.Log(count);
             }
         }
         return count;

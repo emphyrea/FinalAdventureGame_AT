@@ -8,6 +8,7 @@ public class QuestComponent : MonoBehaviour
 {
     List<QuestBase> quests = new List<QuestBase>();
 
+    public event Action<QuestStatus> onStatusChanged;
     public event Action<QuestBase> onNewQuestAdded;
 
     public void CheckBeforeGiveQuest(QuestBase quest)
@@ -31,7 +32,7 @@ public class QuestComponent : MonoBehaviour
     {
         foreach(FetchQuest fetchQuest in quests)
         {
-            fetchQuest.CheckQuestStatus();
+            onStatusChanged?.Invoke(fetchQuest.CheckQuestStatus());
         }
     }
 
