@@ -19,10 +19,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private List<Slot> slots = new List<Slot>();
+    static private List<Slot> slots = new List<Slot>();
     [SerializeField] Slot slotPrefab;
     [SerializeField] RectTransform slotRoot;
-    int numOfSlots = 6;
+    static int numOfSlots = 6;
 
     // Start is called before the first frame update
     void Start()
@@ -32,9 +32,47 @@ public class Inventory : MonoBehaviour
             Slot slot = Instantiate(slotPrefab, slotRoot);
             slots.Add(slot);
             slot.SetSlotNum(i);
-            slot.UpdateSlot();
+            slot.UpdateSlot(null);
         }
     }
+
+    public void AddItem(Item item)
+    {
+        for (int i = 0; i < numOfSlots; i++)
+        { 
+            if(slots[i].CheckSlotFilled())
+            {
+                return;
+            }
+            slots[i].AddItemCount(item);
+            slots[i].UpdateSlot(item);
+            return;
+        }
+    }
+
+    public void RemoveItems(Item item)
+    {
+        for (int i = 0; i < numOfSlots; i++)
+        {
+           slots[i].GetChosenSlotItems(item);
+           slots[i].SubtractItemCount(item.itemCount);
+           slots[i].UpdateSlot(item);
+        }
+    }
+
+    public int GetItemsCount(Item item)
+    {
+        int count = 0;
+        for (int i = 0; i < numOfSlots; i++)
+        {
+            if(slots[i].GetChosenSlotItems(item) != null)
+            {
+                count += slots[i].GetChosenSlotItems(item).itemCount;
+            }
+        }
+        return count;
+    }
+
 
     // Update is called once per frame
     void Update()

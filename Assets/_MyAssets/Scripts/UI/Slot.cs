@@ -19,19 +19,66 @@ public class Slot : MonoBehaviour
     {
         slotItemContent = null;
         slotItemImage.sprite = null;
-        slotItemImage.color = new Color(0,0,0,0);
+        slotItemImage.color = new Color(255,255,255,0);
         numOfItems.text = " ";
     }
 
-    public void UpdateSlot()
+    public void UpdateSlot(Item slotItem)
     {
-        if (slotItemContent != null)
+        if (slotItem != null)
         {
-            slotItemImage.color = new Color(0, 0, 0, 1);
-            slotItemImage.sprite = slotItemContent.itemImage;
-            numOfItems.text = slotItemContent.itemCount.ToString();
+            slotItemImage.color = new Color(255, 255, 255, 1);
+            slotItemContent = slotItem;
+            slotItemImage.sprite = slotItem.itemImage;
         }
     }
+
+    public bool CheckSlotFilled()
+    {
+        if (slotItemContent != null && slotItemContent.itemCount == slotItemContent.itemLimit)
+        { 
+            return true; 
+        }
+        else if (slotItemContent == null || slotItemContent.itemCount < slotItemContent.itemLimit)
+        {
+            return false;
+        }
+        slotItemContent.itemCount = slotItemContent.itemLimit;
+        return true;
+    }
+
+    internal void SubtractItemCount(int num)
+    {
+        slotItemContent.itemCount -= num;
+        numOfItems.text = slotItemContent.itemCount.ToString();
+    }
+
+    public void AddItemCount(Item item)
+    {
+       int count = 0;
+        if(slotItemContent == null)
+        {
+            numOfItems.text = " ";
+        }
+        else
+        {
+            count = slotItemContent.itemCount;
+        }
+        int prevCount = count;
+        int currCount = item.itemCount + prevCount;
+        numOfItems.text = currCount.ToString();
+    }
+
+    public Item GetChosenSlotItems(Item item)
+    {
+        if (slotItemContent != null && slotItemContent == item)
+        {
+            return slotItemContent;
+        }
+        return null;
+    }
+
+
 
     public void SetSlotNum(int num)
     {

@@ -71,9 +71,4 @@ public class QuestNPC : MonoBehaviour, IInteractable
         }
     }
 
-    void QuestObjectReceiver()
-    {
-        
-    }
-
 }

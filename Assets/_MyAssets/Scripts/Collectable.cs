@@ -5,16 +5,18 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour, IInteractable
 {
-
+    [SerializeField] Item item;
     public event Action onInteractionEnded;
 
     public void Interact()
     {
-        throw new NotImplementedException();
+        Inventory.Instance.AddItem(item);
+        Destroy(this.gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnDestroy()
     {
-        //send to inventory, check for filled slot or matching item slot with room available
+        onInteractionEnded?.Invoke();
     }
+
 }

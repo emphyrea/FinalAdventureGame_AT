@@ -7,14 +7,14 @@ public class FetchQuest : QuestBase
 {
 
     QuestType type = QuestType.Fetch;
-    List<GameObject> collectedObjects = new List<GameObject>();
+    [SerializeField] Item requiredObj;
     [SerializeField] int requiredAmt = 3;
 
     QuestStatus fetchStatus;
 
     public bool CheckQuestCompletion()
     {
-        if (collectedObjects.Count >= requiredAmt)
+        if (Inventory.Instance.GetItemsCount(requiredObj) >= requiredAmt)
         { 
             return true;
         }

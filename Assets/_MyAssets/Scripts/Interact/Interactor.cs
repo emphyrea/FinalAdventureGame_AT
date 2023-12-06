@@ -32,7 +32,6 @@ public class Interactor : MonoBehaviour
         ray = new Ray(interactorSource.position, interactorSource.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
         {
-            //Debug.Log(hit.transform.name);
             if (hit.collider.gameObject.TryGetComponent(out IInteractable interactableObj))
             {
                 isInteract?.Invoke();
@@ -43,6 +42,10 @@ public class Interactor : MonoBehaviour
                     alreadyInteract?.Invoke();
                     interactableObj.Interact();
                 }
+            }
+            else
+            {
+                alreadyInteract?.Invoke();
             }
         }
 

@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: apple
   itemLimit: 64
   itemCount: 1
-  itemImage: {fileID: 21300000, guid: 0d4669b16b49e954eb50930b7998c476, type: 3}
+  itemImage: {fileID: 21300000, guid: b0e2712c8ca7a27419bfcb92242b0e6e, type: 3}

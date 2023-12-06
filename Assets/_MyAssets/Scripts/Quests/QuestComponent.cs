@@ -26,4 +26,17 @@ public class QuestComponent : MonoBehaviour
         quests.Add(newQuest);
         onNewQuestAdded?.Invoke(quest);
     }
+
+    public void CheckFetchRequirements()
+    {
+        foreach(FetchQuest fetchQuest in quests)
+        {
+            fetchQuest.CheckQuestStatus();
+        }
+    }
+
+    private void Update()
+    {
+        CheckFetchRequirements();
+    }
 }
