@@ -20,6 +20,16 @@ public class FetchQuest : QuestBase
         return false;
     }
 
+    public Item GetRequiredItem()
+    {
+        return requiredObj;
+    }
+
+    public int GetRequiredAmt()
+    {
+        return requiredAmt;
+    }
+
     public override QuestStatus CheckQuestStatus()
     {
         if(CheckQuestCompletion())

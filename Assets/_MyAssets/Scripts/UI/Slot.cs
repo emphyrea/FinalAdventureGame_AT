@@ -48,8 +48,8 @@ public class Slot : MonoBehaviour
 
     internal void SubtractItemCount(int num)
     {
-        slotItemContent.itemCount -= num;
-        numOfItems.text = slotItemContent.itemCount.ToString();
+        int newNum = int.Parse(numOfItems.text) - num;
+        numOfItems.text = newNum.ToString();
     }
 
     public void AddItemCount(Item item)

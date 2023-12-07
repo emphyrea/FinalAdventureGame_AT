@@ -20,12 +20,14 @@ public class QuestNPC : MonoBehaviour, IInteractable
     public DialogueSegment completeDialogue;
     [SerializeField] DialogueBox dialogueBox;
     QuestStatus questStatus = QuestStatus.NotStarted;
-
     [SerializeField] NPCQuestComponent npcQuestComp;
+
+    [SerializeField] QuestComponent playerQuestComp;
 
     private void Start()
     {
         npcQuestComp = GetComponent<NPCQuestComponent>();
+        playerQuestComp = QuestUI.Instance.GetOwningQuestComp();
     }
 
     private void DialogFinished()
@@ -45,11 +47,10 @@ public class QuestNPC : MonoBehaviour, IInteractable
                 starttalk(requestDialogue);
                 questStatus = QuestStatus.InProgress;
                 npcQuestComp.GiveQuestToPlayer();
-                questStatus = npcQuestComp.GetQuest().GetQuestStatus();
                 return;
             }
         }
-        questStatus = npcQuestComp.GetQuest().GetQuestStatus();
+        questStatus = npcQuestComp.GetQuest().CheckQuestStatus();
         if (questStatus == QuestStatus.InProgress)
         {
             dialogueBox.gameObject.SetActive(true);
@@ -61,15 +62,37 @@ public class QuestNPC : MonoBehaviour, IInteractable
             }
         }
 
+        OnCompleteQuest();
+
+    }
+
+    public void OnCompleteQuest()
+    {
         if (questStatus == QuestStatus.Complete)
         {
             dialogueBox.gameObject.SetActive(true);
             if (starttalk != null)
             {
                 starttalk(completeDialogue);
+                QuestUI.Instance.DestroyQuestSlot(QuestUI.Instance.GetQuestSlotContainingGivenQuest(npcQuestComp.GetQuest()));
+                CheckTypeAppropriateRequirements();
                 questStatus = QuestStatus.NotStarted;
             }
         }
+    }
+
+    public void CheckTypeAppropriateRequirements()
+    {
+        if (npcQuestComp.GetQuest().GetQuestType() == QuestType.Fetch)
+        {
+            Inventory.Instance.RemoveItems(GetFetchQuest().GetRequiredItem(), GetFetchQuest().GetRequiredAmt());
+        }
+    }
+
+    public FetchQuest GetFetchQuest()
+    {
+        FetchQuest fetchquest = playerQuestComp.GetIndexedFetchQuest(playerQuestComp.GetQuestIndex(npcQuestComp.GetQuest()));
+        return fetchquest;
     }
 
 }

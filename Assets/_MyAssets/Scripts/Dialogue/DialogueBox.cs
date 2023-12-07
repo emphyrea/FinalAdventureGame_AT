@@ -56,7 +56,7 @@ public class DialogueBox : MonoBehaviour
     {
         if (speaker.subjectFace == null)
         {
-            speakerDisplayFace.color = new Color(0, 0, 0, 0);
+            speakerDisplayFace.color = new Color(255, 255, 255, 1);
         }
         else
         {

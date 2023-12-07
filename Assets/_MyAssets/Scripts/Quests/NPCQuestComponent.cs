@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class NPCQuestComponent : MonoBehaviour
 {
     [SerializeField] QuestComponent playerQuestComponent;
@@ -20,6 +19,10 @@ public class NPCQuestComponent : MonoBehaviour
     public QuestBase GetQuest()
     {
         return quest;
+    }
+    private void Start()
+    {
+        quest.SetQuestGiverComponent(this.transform.gameObject);
     }
 
 }

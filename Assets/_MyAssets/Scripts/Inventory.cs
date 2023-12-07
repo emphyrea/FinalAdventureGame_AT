@@ -50,12 +50,13 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void RemoveItems(Item item)
+    public void RemoveItems(Item item, int amt)
     {
+        int actualAmt = amt - 1;
         for (int i = 0; i < numOfSlots; i++)
         {
            slots[i].GetChosenSlotItems(item);
-           slots[i].SubtractItemCount(item.itemCount);
+           slots[i].SubtractItemCount(actualAmt);
            slots[i].UpdateSlot(item);
         }
     }

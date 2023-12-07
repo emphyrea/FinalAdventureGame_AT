@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca665a6f36febb40b414d574a887479, type: 3}
   m_Name: ApplesQuest
   m_EditorClassIdentifier: 
+  originalOwner: {fileID: 0}
   questTitle: Sun's Apples
   questDetails: Bring Sun 3 Apples
+  type: 0
+  requiredObj: {fileID: 11400000, guid: a211ae6d4b704a842b6500392706a7fb, type: 2}
   requiredAmt: 3

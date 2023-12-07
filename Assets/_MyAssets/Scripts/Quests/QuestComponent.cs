@@ -32,8 +32,35 @@ public class QuestComponent : MonoBehaviour
     {
         foreach(FetchQuest fetchQuest in quests)
         {
-            onStatusChanged?.Invoke(fetchQuest.CheckQuestStatus());
+            onStatusChanged?.Invoke(fetchQuest.GetQuestGiverComponent().GetQuest().SetQuestStatus(fetchQuest.CheckQuestStatus()));
         }
+    }
+
+    public int GetQuestIndex(QuestBase quest)
+    {
+        if (quests.Contains(quest))
+        {
+            return quests.IndexOf(quest);
+        }
+        return 0;
+    }
+
+    public FetchQuest GetIndexedFetchQuest(int index)
+    {
+        if(quests[index].GetType() == typeof(FetchQuest))
+        {
+            return (FetchQuest)quests[index];
+        }
+        return null;
+    }
+
+    public int GetFetchRequiredAmt(FetchQuest fetchQuest)
+    {
+        return fetchQuest.GetRequiredAmt();
+    }
+    public Item GetFetchRequiredItem(FetchQuest fetchQuest)
+    {
+        return fetchQuest.GetRequiredItem();
     }
 
     private void Update()

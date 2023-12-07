@@ -14,7 +14,7 @@ public enum QuestType
 public abstract class QuestBase : ScriptableObject
 {
 
-    [SerializeField] QuestNPC originalOwner;
+    [SerializeField] NPCQuestComponent originalOwner;
 
     [SerializeField] string questTitle;
     [SerializeField] string questDetails;
@@ -22,6 +22,8 @@ public abstract class QuestBase : ScriptableObject
     public string GetQuestTitle() { return questTitle; }
 
     private QuestStatus status = QuestStatus.NotStarted;
+
+    [SerializeField] QuestType type = QuestType.Fetch;
 
     public delegate void QuestStatusCallback(QuestStatus status);
     public event Action<QuestStatus> statusChanged;
@@ -42,6 +44,24 @@ public abstract class QuestBase : ScriptableObject
     public QuestStatus GetQuestStatus()
     {
         return status;
+    }
+
+    public QuestType GetQuestType()
+    {
+        return type;
+    }
+
+    public void SetQuestGiverComponent(GameObject newParent)
+    {
+        if (newParent.transform.GetComponent<NPCQuestComponent>() != null)
+        {
+            originalOwner = newParent.transform.GetComponent<NPCQuestComponent>();
+        }
+    }
+
+    public NPCQuestComponent GetQuestGiverComponent()
+    {
+        return originalOwner;
     }
 
     public QuestComponent OwningQuestComponent

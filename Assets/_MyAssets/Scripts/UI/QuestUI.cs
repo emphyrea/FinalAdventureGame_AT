@@ -53,6 +53,23 @@ public class QuestUI : MonoBehaviour
         }
     }
 
+    public QuestComponent GetOwningQuestComp()
+    {
+        return owningQuestComponent;
+    }
+
+    public QuestSlot GetQuestSlotContainingGivenQuest(QuestBase quest)
+    {
+        foreach(QuestSlot slot in questSlots)
+        {
+            if(slot.GetCorrespondingQuest() == quest)
+            {
+                return slot;
+            }
+        }
+        return null;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -69,7 +86,7 @@ public class QuestUI : MonoBehaviour
         }
     }
 
-    private void DestroyQuestSlot(QuestSlot slot)
+    public void DestroyQuestSlot(QuestSlot slot)
     {
         Destroy(slot.gameObject);
     }
