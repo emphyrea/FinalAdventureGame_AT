@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     public float airMultiplier = 0.2f;
     bool canJump = true;
 
+    bool canInput = true;
+
     [SerializeField] Transform orient;
     float horizontalInput;
     float verticalInput;
@@ -55,6 +57,11 @@ public class PlayerMovement : MonoBehaviour
         {
             moveSpeed /= 2;
         }
+    }
+
+    public void SetCanInput(bool set)
+    {
+        canInput = set;
     }
 
     private void MovePlayer()
@@ -104,8 +111,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
-
-        PlayerInput();
+        if(canInput)
+        {
+            PlayerInput();
+        }
 
         if(isGrounded)
         {
@@ -119,8 +128,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
-        SpeedClamper();
-        UpdateAnimation();
+        if (canInput)
+        {
+            MovePlayer();
+            SpeedClamper();
+            UpdateAnimation();
+        }
+
     }
 }

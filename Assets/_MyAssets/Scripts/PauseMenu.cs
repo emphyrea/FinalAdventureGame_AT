@@ -18,12 +18,13 @@ public class PauseMenu : MonoBehaviour
         {
             Instance = this;
         }
-        this.transform.parent = menuUI.transform;
         menuUI.SetActive(false);
+        Time.timeScale = 1f;
     }
 
-    private void OnEnable()
+    public void OnOpen()
     {
+        menuUI.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Time.timeScale = 0f;

@@ -33,6 +33,7 @@ public class QuestUI : MonoBehaviour
         owningQuestComponent.onNewQuestAdded += AddNewQuest;
         owningQuestComponent.onStatusChanged += UpdateQuestStatusIMG;
         owningQuestComponent.onConfirmCompletion += UpdateCompletedCount;
+        owningQuestComponent.onConfirmFinishAll += OpenFinishMenu;
     }
 
     // Start is called before the first frame update
@@ -95,6 +96,11 @@ public class QuestUI : MonoBehaviour
             questUIObj.gameObject.SetActive(false);
             isOpen = false;
         }
+    }
+
+    public void OpenFinishMenu()
+    {
+        PauseMenu.Instance.OnOpen();
     }
 
     public void DestroyQuestSlot(QuestSlot slot)

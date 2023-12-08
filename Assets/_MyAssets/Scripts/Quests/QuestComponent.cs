@@ -11,6 +11,7 @@ public class QuestComponent : MonoBehaviour
     public event Action<QuestStatus> onStatusChanged;
     public event Action<QuestBase> onNewQuestAdded;
     public event Action<int> onConfirmCompletion;
+    public event Action onConfirmFinishAll;
 
     private int completedQuests = 0;
 
@@ -76,5 +77,9 @@ public class QuestComponent : MonoBehaviour
         completedQuests++;
         Debug.Log(completedQuests);
         onConfirmCompletion?.Invoke(completedQuests);
+        if(completedQuests >= 3)
+        {
+            onConfirmFinishAll?.Invoke();
+        }
     }
 }

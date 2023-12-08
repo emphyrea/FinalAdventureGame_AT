@@ -23,16 +23,21 @@ public class QuestNPC : MonoBehaviour, IInteractable
     [SerializeField] NPCQuestComponent npcQuestComp;
 
     [SerializeField] QuestComponent playerQuestComp;
+    private PlayerMovement playerMove;
+
+    public event Action onTalkingPlayerPause;
 
     private void Start()
     {
         npcQuestComp = GetComponent<NPCQuestComponent>();
         playerQuestComp = QuestUI.Instance.GetOwningQuestComp();
+        playerMove = playerQuestComp.transform.GetComponent<PlayerMovement>();
     }
 
     private void DialogFinished()
     {
         onInteractionEnded?.Invoke();
+        playerMove.SetCanInput(true);
     }
 
     public void Interact()
@@ -44,6 +49,7 @@ public class QuestNPC : MonoBehaviour, IInteractable
             dialogueBox.gameObject.SetActive(true);
             if (starttalk != null)
             {
+                playerMove.SetCanInput(false);
                 starttalk(requestDialogue);
                 questStatus = QuestStatus.InProgress;
                 npcQuestComp.GiveQuestToPlayer();
@@ -56,8 +62,9 @@ public class QuestNPC : MonoBehaviour, IInteractable
             dialogueBox.gameObject.SetActive(true);
             if (starttalk != null)
             {
+                playerMove.SetCanInput(false);
                 starttalk(inProgressDialogue);
-
+    
                 return;
             }
         }
@@ -73,6 +80,7 @@ public class QuestNPC : MonoBehaviour, IInteractable
             dialogueBox.gameObject.SetActive(true);
             if (starttalk != null)
             {
+                playerMove.SetCanInput(false);
                 starttalk(completeDialogue);
                 starttalk = null;
                 QuestUI.Instance.DestroyQuestSlot(QuestUI.Instance.GetQuestSlotContainingGivenQuest(npcQuestComp.GetQuest()));
