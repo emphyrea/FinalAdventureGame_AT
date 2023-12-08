@@ -10,6 +10,9 @@ public class QuestComponent : MonoBehaviour
 
     public event Action<QuestStatus> onStatusChanged;
     public event Action<QuestBase> onNewQuestAdded;
+    public event Action<int> onConfirmCompletion;
+
+    private int completedQuests = 0;
 
     public void CheckBeforeGiveQuest(QuestBase quest)
     {
@@ -66,5 +69,12 @@ public class QuestComponent : MonoBehaviour
     private void Update()
     {
         CheckFetchRequirements();
+    }
+
+    internal void AddToCompleted()
+    {
+        completedQuests++;
+        Debug.Log(completedQuests);
+        onConfirmCompletion?.Invoke(completedQuests);
     }
 }

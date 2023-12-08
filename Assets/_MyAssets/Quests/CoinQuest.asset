@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ca665a6f36febb40b414d574a887479, type: 3}
+  m_Name: CoinQuest
+  m_EditorClassIdentifier: 
+  originalOwner: {fileID: 0}
+  questTitle: Amanita's Coins
+  questDetails: Bring Amanita 5 coins!
+  type: 0
+  requiredObj: {fileID: 11400000, guid: 1ff4bf2052b70524b8157bf40b0a2d55, type: 2}
+  requiredAmt: 5

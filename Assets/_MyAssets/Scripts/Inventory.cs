@@ -40,24 +40,31 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < numOfSlots; i++)
         { 
-            if(slots[i].CheckSlotFilled())
+            if(!slots[i].CheckSlotFilled(item))
             {
+                slots[i].AddItemCount(item);
+                slots[i].UpdateSlot(item);
                 return;
             }
-            slots[i].AddItemCount(item);
-            slots[i].UpdateSlot(item);
-            return;
         }
     }
 
     public void RemoveItems(Item item, int amt)
     {
-        int actualAmt = amt - 1;
+        int actualAmt = amt;
         for (int i = 0; i < numOfSlots; i++)
         {
-           slots[i].GetChosenSlotItems(item);
-           slots[i].SubtractItemCount(actualAmt);
-           slots[i].UpdateSlot(item);
+            
+            if (slots[i].GetChosenSlotItems(item) && !slots[i].SubtractItemCount(actualAmt))
+            {
+                slots[i].UpdateSlot(item);
+                return;
+            }
+            else if(slots[i].GetChosenSlotItems(item) && slots[i].SubtractItemCount(actualAmt))
+            {
+                slots[i].UpdateSlot(null);
+                return;
+            }
         }
     }
 
@@ -66,10 +73,9 @@ public class Inventory : MonoBehaviour
         int count = 0;
         for (int i = 0; i < numOfSlots; i++)
         {
-            if(slots[i].GetChosenSlotItems(item) != null)
+            if(slots[i].GetChosenSlotItems(item))
             {
                 count += slots[i].GetItemCount();
-                Debug.Log(count);
             }
         }
         return count;

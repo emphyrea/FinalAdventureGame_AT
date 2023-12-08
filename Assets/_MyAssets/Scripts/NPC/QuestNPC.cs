@@ -74,9 +74,9 @@ public class QuestNPC : MonoBehaviour, IInteractable
             if (starttalk != null)
             {
                 starttalk(completeDialogue);
+                starttalk = null;
                 QuestUI.Instance.DestroyQuestSlot(QuestUI.Instance.GetQuestSlotContainingGivenQuest(npcQuestComp.GetQuest()));
                 CheckTypeAppropriateRequirements();
-                questStatus = QuestStatus.NotStarted;
             }
         }
     }
@@ -86,6 +86,7 @@ public class QuestNPC : MonoBehaviour, IInteractable
         if (npcQuestComp.GetQuest().GetQuestType() == QuestType.Fetch)
         {
             Inventory.Instance.RemoveItems(GetFetchQuest().GetRequiredItem(), GetFetchQuest().GetRequiredAmt());
+            playerQuestComp.AddToCompleted();
         }
     }
 

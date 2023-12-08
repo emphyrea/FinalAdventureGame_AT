@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6d7d9cf4d5383c4194679e6d4b46134, type: 3}
   m_Name: Mushroom
   m_EditorClassIdentifier: 
-  subjectName: Mushy
-  innerColorTinting: {r: 1, g: 0.689924, b: 0.5981132, a: 0}
-  subjectFace: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  subjectName: Amanita
+  innerColorTinting: {r: 1, g: 0.689924, b: 0.5981132, a: 1}
+  subjectFace: {fileID: 21300000, guid: e7d9593dc5bff474ea28ac3e74f79e74, type: 3}

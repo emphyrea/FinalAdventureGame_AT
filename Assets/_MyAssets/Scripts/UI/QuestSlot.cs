@@ -30,13 +30,16 @@ public class QuestSlot : MonoBehaviour
 
     public void ChangeProgressImg(QuestStatus status)
     {
-        if (status == QuestStatus.Complete)
+        if(progressImg != null)
         {
-            progressImg.sprite = completedImg;
-        }
-        else
-        {
-            progressImg.sprite = inProgressImg;
+            if (status == QuestStatus.Complete)
+            {
+                progressImg.sprite = completedImg;
+            }
+            else
+            {
+                progressImg.sprite = inProgressImg;
+            }
         }
     }
 }

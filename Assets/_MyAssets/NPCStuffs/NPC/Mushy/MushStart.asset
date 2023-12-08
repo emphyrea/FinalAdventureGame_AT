@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MushStart
   m_EditorClassIdentifier: 
   dialogue:
-  - :D (He thanks you! He's able to make amends now.)
+  - :D (He thanks you!)
   speaker: {fileID: 11400000, guid: a4cb847bac32f57478ebcf93cab9bb7f, type: 2}

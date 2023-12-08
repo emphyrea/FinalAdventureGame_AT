@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Playables;
 using UnityEngine;
+using TMPro;
 
 public class QuestUI : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class QuestUI : MonoBehaviour
 
     [SerializeField] QuestSlot questSlotPrefab;
     [SerializeField] RectTransform questSlotRoot;
+
+    [SerializeField] TextMeshProUGUI completedQuestNumText;
 
     public static QuestUI Instance;
 
@@ -29,12 +32,14 @@ public class QuestUI : MonoBehaviour
         }
         owningQuestComponent.onNewQuestAdded += AddNewQuest;
         owningQuestComponent.onStatusChanged += UpdateQuestStatusIMG;
+        owningQuestComponent.onConfirmCompletion += UpdateCompletedCount;
     }
 
     // Start is called before the first frame update
     void Start()
     {
         questUIObj.gameObject.SetActive(false);
+        completedQuestNumText.text = 0.ToString();
 
     }
 
@@ -51,6 +56,12 @@ public class QuestUI : MonoBehaviour
         {
             slot.ChangeProgressImg(status);
         }
+    }
+
+    private void UpdateCompletedCount(int count)
+    {
+        Debug.Log(count);
+        completedQuestNumText.text = count.ToString();
     }
 
     public QuestComponent GetOwningQuestComp()
@@ -88,6 +99,9 @@ public class QuestUI : MonoBehaviour
 
     public void DestroyQuestSlot(QuestSlot slot)
     {
-        Destroy(slot.gameObject);
+        if(slot != null)
+        {
+            Destroy(slot.gameObject);
+        }
     }
 }

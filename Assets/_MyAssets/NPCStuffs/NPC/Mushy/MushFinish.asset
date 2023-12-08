@@ -15,8 +15,8 @@ MonoBehaviour:
   dialogue:
   - :S ... (...He's Shy.)
   - '>.> ... (...He''s asking for some help?)'
-  - U.U ... (...He got into a fight with his friend and needs you to talk to herfor
-    him.)
-  - ' ^.^ ... (...His friend is a purple mushroom!)'
+  - U.U ... (...He got into a fight with the other mushrooms and they stole all his
+    coins.)
+  - :( ... (...He needs just 5 coins to make mushroom rent!)
   - :) ... (...He thanks you!)
   speaker: {fileID: 11400000, guid: a4cb847bac32f57478ebcf93cab9bb7f, type: 2}

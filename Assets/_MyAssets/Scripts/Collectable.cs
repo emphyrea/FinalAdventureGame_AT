@@ -11,7 +11,6 @@ public class Collectable : MonoBehaviour, IInteractable
     public void Interact()
     {
         Inventory.Instance.AddItem(item);
-        Debug.Log("added");
         Destroy(this.gameObject);
     }
 
@@ -20,4 +19,13 @@ public class Collectable : MonoBehaviour, IInteractable
         onInteractionEnded?.Invoke();
     }
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            Inventory.Instance.AddItem(item);
+            Destroy(this.gameObject);
+        }
+    }
 }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MushProgress
   m_EditorClassIdentifier: 
   dialogue:
-  - :? ... (He's wondering if you talked to his friend yet?)
+  - :? ... (He's wondering if you got all 5 coins yet?)
   speaker: {fileID: 11400000, guid: a4cb847bac32f57478ebcf93cab9bb7f, type: 2}

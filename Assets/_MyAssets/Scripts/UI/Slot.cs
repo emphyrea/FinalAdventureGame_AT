@@ -12,14 +12,12 @@ public class Slot : MonoBehaviour
     [SerializeField] Item slotItemContent;
     [SerializeField] Image slotItemImage;
     [SerializeField] TextMeshProUGUI numOfItems;
+    [SerializeField] int itemNum;
 
     // Start is called before the first frame update
     void Start()
     {
-        slotItemContent = null;
-        slotItemImage.sprite = null;
-        slotItemImage.color = new Color(255,255,255,0);
-        numOfItems.text = " ";
+        ClearSlot();
     }
 
     public void UpdateSlot(Item slotItem)
@@ -30,59 +28,80 @@ public class Slot : MonoBehaviour
             slotItemContent = slotItem;
             slotItemImage.sprite = slotItem.itemImage;
         }
+        else
+        {
+            ClearSlot();
+        }
     }
 
-    public bool CheckSlotFilled()
+    public void ClearSlot()
     {
-        if (slotItemContent != null && slotItemContent.itemCount == slotItemContent.itemLimit)
-        { 
-            return true; 
-        }
-        else if (slotItemContent == null || slotItemContent.itemCount < slotItemContent.itemLimit)
+        slotItemContent = null;
+        slotItemImage.sprite = null;
+        slotItemImage.color = new Color(255, 255, 255, 0);
+        numOfItems.text = " ";
+    }
+
+    public bool CheckSlotFilled(Item item)
+    {    
+        if (slotItemContent == null || slotItemContent.itemCount < slotItemContent.itemLimit && slotItemContent == item)
         {
             return false;
+        }
+        if (slotItemContent != null && slotItemContent.itemCount == slotItemContent.itemLimit || slotItemContent != item)
+        {
+            return true;
         }
         slotItemContent.itemCount = slotItemContent.itemLimit;
         return true;
     }
 
-    internal void SubtractItemCount(int num)
+    internal bool SubtractItemCount(int num)
     {
-        int newNum = int.Parse(numOfItems.text) - num;
-        numOfItems.text = newNum.ToString();
+        int newNum = itemNum - num;
+        if(newNum <= 0)
+        {
+            itemNum = 0;
+            numOfItems.text = 0.ToString();
+            return true;
+        }
+        else
+        {
+            itemNum = newNum;
+            numOfItems.text = newNum.ToString();
+            return false;
+        }
     }
 
     public void AddItemCount(Item item)
     {
-        int count = 0;
         if (slotItemContent == null)
         {
             numOfItems.text = " ";
         }
         else
         {
-            count = int.Parse(numOfItems.text);
+            itemNum = int.Parse(numOfItems.text);
         }
 
-        Debug.Log(count);
-        int currCount = item.itemCount + count;
+        int currCount = item.itemCount + itemNum;
+        itemNum = currCount;
         numOfItems.text = currCount.ToString();
 
     }
 
     public int GetItemCount()
     { 
-        int count = 0;
-        return count = int.Parse(numOfItems.text);
+        return itemNum;
     }
 
-    public Item GetChosenSlotItems(Item item)
+    public bool GetChosenSlotItems(Item item)
     {
         if (slotItemContent != null && slotItemContent == item)
         {
-            return slotItemContent;
+            return true;
         }
-        return null;
+        return false;
     }
 
 

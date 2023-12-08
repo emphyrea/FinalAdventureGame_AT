@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded;
     public float groundDrag = 5f;
 
-    public float jumpForce = 12f;
+    public float jumpForce = 20f;
     public float jumpCooldown = 0.25f;
     public float airMultiplier = 0.2f;
     bool canJump = true;
