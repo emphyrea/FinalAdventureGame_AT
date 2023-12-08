@@ -135,5 +135,10 @@ public class PlayerMovement : MonoBehaviour
             UpdateAnimation();
         }
 
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            ButtonManager.Instance.QuitGame();
+        }
+
     }
 }

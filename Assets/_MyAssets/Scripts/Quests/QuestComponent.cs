@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Playables;
 using UnityEngine;
 
 public class QuestComponent : MonoBehaviour
 {
     List<QuestBase> quests = new List<QuestBase>();
 
-    public event Action<QuestStatus> onStatusChanged;
+    public event Action<FetchQuest, QuestStatus> onStatusChanged;
     public event Action<QuestBase> onNewQuestAdded;
     public event Action<int> onConfirmCompletion;
     public event Action onConfirmFinishAll;
@@ -36,7 +35,7 @@ public class QuestComponent : MonoBehaviour
     {
         foreach(FetchQuest fetchQuest in quests)
         {
-            onStatusChanged?.Invoke(fetchQuest.GetQuestGiverComponent().GetQuest().SetQuestStatus(fetchQuest.CheckQuestStatus()));
+            onStatusChanged?.Invoke(fetchQuest, fetchQuest.GetQuestGiverComponent().GetQuest().SetQuestStatus(fetchQuest.CheckQuestStatus()));
         }
     }
 

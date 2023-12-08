@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Playables;
 using UnityEngine;
 using TMPro;
 
@@ -51,12 +50,17 @@ public class QuestUI : MonoBehaviour
         questSlots.Add(newQuestSlot);
     }
 
-    private void UpdateQuestStatusIMG(QuestStatus status)
+    private void UpdateQuestStatusIMG(FetchQuest quest, QuestStatus status)
     {
-        foreach (QuestSlot slot in questSlots)
+        foreach(QuestSlot slot in questSlots)
         {
-            slot.ChangeProgressImg(status);
+            if(slot.GetCorrespondingQuest() == quest)
+            {
+                slot.ChangeProgressImg(status);
+            }
         }
+        
+
     }
 
     private void UpdateCompletedCount(int count)

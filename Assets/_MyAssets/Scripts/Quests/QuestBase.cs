@@ -30,6 +30,11 @@ public abstract class QuestBase : ScriptableObject
 
     public abstract QuestStatus CheckQuestStatus();
 
+    public NPCQuestComponent GetOriginalOwner()
+    {
+        return originalOwner;
+    }
+
     public QuestStatus SetQuestStatus(QuestStatus oldStatus, QuestStatus newStatus)
     {
         statusChanged?.Invoke(status);

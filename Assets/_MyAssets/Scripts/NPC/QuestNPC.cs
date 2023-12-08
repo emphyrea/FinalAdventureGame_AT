@@ -27,6 +27,7 @@ public class QuestNPC : MonoBehaviour, IInteractable
 
     public event Action onTalkingPlayerPause;
 
+
     private void Start()
     {
         npcQuestComp = GetComponent<NPCQuestComponent>();
@@ -51,12 +52,13 @@ public class QuestNPC : MonoBehaviour, IInteractable
             {
                 playerMove.SetCanInput(false);
                 starttalk(requestDialogue);
-                questStatus = QuestStatus.InProgress;
+                questStatus = npcQuestComp.GetQuest().SetQuestStatus(QuestStatus.InProgress);
                 npcQuestComp.GiveQuestToPlayer();
                 return;
             }
         }
         questStatus = npcQuestComp.GetQuest().CheckQuestStatus();
+        Debug.Log(questStatus);
         if (questStatus == QuestStatus.InProgress)
         {
             dialogueBox.gameObject.SetActive(true);
@@ -75,16 +77,20 @@ public class QuestNPC : MonoBehaviour, IInteractable
 
     public void OnCompleteQuest()
     {
-        if (questStatus == QuestStatus.Complete)
+        if (questStatus == QuestStatus.Complete )
         {
             dialogueBox.gameObject.SetActive(true);
             if (starttalk != null)
             {
                 playerMove.SetCanInput(false);
                 starttalk(completeDialogue);
-                starttalk = null;
-                QuestUI.Instance.DestroyQuestSlot(QuestUI.Instance.GetQuestSlotContainingGivenQuest(npcQuestComp.GetQuest()));
-                CheckTypeAppropriateRequirements();
+                if(npcQuestComp.GetIfDoneBefore() != true)
+                {
+                    QuestUI.Instance.DestroyQuestSlot(QuestUI.Instance.GetQuestSlotContainingGivenQuest(npcQuestComp.GetQuest()));
+                    CheckTypeAppropriateRequirements();
+                    questStatus = npcQuestComp.GetQuest().SetQuestStatus(QuestStatus.Complete);
+                    npcQuestComp.SetIfDoneBefore(true);
+                }
             }
         }
     }

@@ -7,6 +7,8 @@ public class NPCQuestComponent : MonoBehaviour
 
     [SerializeField] QuestBase quest;
 
+    bool doneBefore = false;
+
     public void GiveQuestToPlayer()
     {
         if (playerQuestComponent != null)
@@ -16,10 +18,21 @@ public class NPCQuestComponent : MonoBehaviour
         }
     }
 
+    public bool GetIfDoneBefore()
+    {
+        return doneBefore;
+    }
+
+    public void SetIfDoneBefore(bool set)
+    {
+        doneBefore = set;
+    }
+
     public QuestBase GetQuest()
     {
         return quest;
     }
+
     private void Start()
     {
         quest.SetQuestGiverComponent(this.transform.gameObject);

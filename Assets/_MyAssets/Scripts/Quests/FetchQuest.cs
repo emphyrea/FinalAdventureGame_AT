@@ -15,6 +15,7 @@ public class FetchQuest : QuestBase
     {
         if (Inventory.Instance.GetItemsCount(requiredObj) >= requiredAmt)
         {
+            Debug.Log("complete return true");
             return true;
         }
         return false;
@@ -32,11 +33,26 @@ public class FetchQuest : QuestBase
 
     public override QuestStatus CheckQuestStatus()
     {
-        if(CheckQuestCompletion())
+        if (CheckQuestCompletion()) //not done before and is complete
+        {
+            if(GetOriginalOwner().GetIfDoneBefore() != true)
+            {
+                Debug.Log("Here");
+                return SetQuestStatus(fetchStatus, QuestStatus.Complete);
+            }
+            if(GetOriginalOwner().GetIfDoneBefore() == true)
+            {
+                return GetQuestStatus(); //should be complete
+            }
+        }
+        if(GetQuestStatus() == QuestStatus.NotStarted || GetQuestStatus() == QuestStatus.InProgress)
+        {
+             return SetQuestStatus(fetchStatus, QuestStatus.InProgress);
+        }
+        else
         {
             return SetQuestStatus(fetchStatus, QuestStatus.Complete);
         }
-        return SetQuestStatus(fetchStatus, QuestStatus.InProgress);
     }
 
 }
